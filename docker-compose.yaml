@@ -1,0 +1,57 @@
+version: "3.9"
+
+x-common:
+  default_environment_args: &default_environment_args
+    DATABASE_URL: postgres://postgres:postgres@postgres:5432/distributed_audit_hub_db
+    DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE}
+    SECRET_KEY: ${SECRET_KEY}
+    JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+    DJANGO_ALLOW_ASYNC_UNSAFE: ${DJANGO_ALLOW_ASYNC_UNSAFE}
+
+
+services:
+  api:
+    container_name: ${COMPOSE_PROJECT_NAME}_api
+    build:
+      context: .
+      target: api-dev
+    command: ["sh", "-c", "until nc -z postgres 5432; do echo waiting for db; sleep 1; done; python manage.py migrate && uvicorn config.asgi:fastapp --host 0.0.0.0 --port 9000 --reload"]
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/app
+    environment: *default_environment_args
+    depends_on:
+      - postgres
+
+  admin:
+    container_name: ${COMPOSE_PROJECT_NAME}_admin
+    build:
+      context: .
+      target: admin-dev
+    command: ["sh", "-c", "until nc -z postgres 5432; do echo waiting for db; sleep 1; done; python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+    environment: *default_environment_args
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: ${COMPOSE_PROJECT_NAME}_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: distributed_audit_hub_db
+      POSTGRES_USER: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  # puerto host externo, interno sigue siendo 5432
+
+volumes:
+  postgres_data:
+  static_volume:
