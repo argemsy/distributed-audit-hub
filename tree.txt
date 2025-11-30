@@ -1,0 +1,78 @@
+.
+├── Dockerfile
+├── Makefile
+├── README.md
+├── config
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── config_settings.py
+│   ├── settings
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   └── local.py
+│   ├── shared
+│   │   ├── __init__.py
+│   │   └── structlog.py
+│   ├── urls.py
+│   └── wsgi.py
+├── db.sqlite3
+├── devops
+│   ├── init-aws.sh
+│   ├── run.sh
+│   ├── run_django.sh
+│   ├── run_test.sh
+│   └── run_uvicorn.sh
+├── docker-compose.yaml
+├── docker.env
+├── manage.py
+├── mocks
+├── poetry.lock
+├── pyproject.toml
+├── pytest.ini
+├── src
+│   ├── __init__.py
+│   ├── audit_hub
+│   │   ├── __init__.py
+│   │   ├── admin
+│   │   │   └── __init__.py
+│   │   ├── apps.py
+│   │   ├── migrations
+│   │   │   └── __init__.py
+│   │   └── models
+│   │       ├── __init__.py
+│   │       └── audit_log.py
+│   └── contexts
+│       ├── __init__.py
+│       ├── audit_log
+│       │   ├── __init__.py
+│       │   ├── application
+│       │   │   └── __init__.py
+│       │   ├── domain
+│       │   │   ├── __init__.py
+│       │   │   ├── audit_log_entity.py
+│       │   │   └── audit_log_repository.py
+│       │   └── infrastructure
+│       │       ├── __init__.py
+│       │       ├── audit_log_criteria_impl.py
+│       │       └── audit_log_repository_impl.py
+│       └── shared
+│           ├── __init__.py
+│           ├── criteria.py
+│           ├── generic_typing.py
+│           ├── model_mixins.py
+│           └── repository_base.py
+├── static
+├── staticfiles
+├── tests
+│   ├── __init__.py
+│   └── src
+│       ├── __init__.py
+│       └── audit_hub
+│           ├── __init__.py
+│           ├── e2e
+│           │   └── __init__.py
+│           └── unit
+│               └── __init__.py
+└── tree.txt
+
+24 directories, 52 files

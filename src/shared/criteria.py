@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import Generic, Optional
 
 # Own Libraries
-from src.audit_hub.shared.generic_typing import FilterT, OrderByT
+from src.shared.generic_typing import FilterT, OrderByT
 
 
 @dataclass()
