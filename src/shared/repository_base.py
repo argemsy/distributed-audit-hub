@@ -3,7 +3,7 @@ from abc import ABC
 from typing import Generic, Optional, Type
 
 # Own Libraries
-from src.audit_hub.shared.generic_typing import EntityT, ModelT
+from src.shared.generic_typing import EntityT, ModelT
 
 
 class RepositoryI(ABC, Generic[ModelT, EntityT]):
